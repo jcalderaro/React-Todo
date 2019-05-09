@@ -3,20 +3,44 @@
 /* Use This Area To Create The Form*/
 
 import React from 'react';
-const TodoForm = props => {
-  return (
-    <form>
-      <input
-        onChange={props.handleTodoChange}
-        type="text"
-        name="todo"
-        value={props.value}
-        placeholder="...todo"
-      />
-      <button onClick={props.handleAddTodo}>Add Todo</button>
-      <button onClick={props.handleClearTodos}>Clear Completed</button>
-    </form>
-  );
+
+class TodoListForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            input: ""
+        };
+    };
+
+    onUpdate = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+      };
+
+    handleSubmit = event => {
+        event.preventDefault();
+        this.props.addItem(this.state.input);
+        this.setState({ input: "" });
+    };
+
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <input 
+                    type="text" 
+                    name="input"
+                    id="new-item"
+                    placeholder="...todo"
+                    value={this.state.input}
+                    onChange={this.onUpdate}
+                    />
+                <button type="submit">Add Todo</button>
+            </form>
+        );
+    }
+    
 };
 
-export default TodoForm;
+export default TodoListForm;

@@ -1,14 +1,19 @@
 import React from 'react';
+import './Todo.scss';
 
-const Todo = props => {
-  return (
-    <div
-      style={props.todo.completed ? { textDecoration: 'line-through' } : null}
-      onClick={() => props.handleToggleComplete(props.todo.id)}
-    >
-      {props.todo.task}
-    </div>
-  );
-};
+function Todo(props) {
+    let classNames = "item"
+    if (props.item.completed){
+        classNames += "completed";
+    }
+    function updateTaskList() {
+        props.toggleComplete(props.item.id);
+    }
+    return (
+        <div className={classNames} onClick={updateTaskList}>
+            <p>{props.item.name}</p>
+        </div>
+    )
+}
 
 export default Todo;

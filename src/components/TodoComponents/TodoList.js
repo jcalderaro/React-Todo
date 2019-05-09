@@ -8,18 +8,14 @@
 import React from 'react';
 import Todo from './Todo';
 
-const TodoList = props => {
-  return (
-    <div>
-      {props.todos.map(todo => (
-        <Todo
-          handleToggleComplete={props.handleToggleComplete}
-          key={todo.id}
-          todo={todo}
-        />
-      ))}
-    </div>
-  );
-};
+function TodoList(props){
+    return(
+        <div className="todo-list-div">
+            {props.todoListItems.map(item => (
+                <Todo key={item.id} item={item} toggleComplete={props.toggleComplete} />
+            ))}
+        </div>
+    )
+}
 
 export default TodoList;
