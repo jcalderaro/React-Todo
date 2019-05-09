@@ -1,15 +1,68 @@
-/* Information Below Came With Assignment // 
-
 import React from 'react';
+import Todo from './components/TodoComponents/Todo';
+import TodoForm from './components/TodoComponents/TodoForm';
+import TodoList from './components/TodoComponents/TodoList';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      tasks: []
+    }
+  }
+
+  // need method for adding task to state
+  // this will handle to onClick method from TodoForm
+  handleChanges = taskName => {
+    const newTask = {
+      task: taskName,
+      id: Date.now(),
+      completed: false
+    };
+    const taskList = this.state.tasks.slice();
+    taskList.push(newTask);
+    this.setState({ tasks: taskList });
+  };
+
+  handleComplete = taskID => {
+    this.setState({
+      tasks: this.state.tasks.map(rec =>
+        rec.id === taskID ? { ...rec, completed: !rec.completed } : rec
+      )
+    });
+  }
+
+  function clearComplete() {
+    props.toggleComplete(props.item.id);
+  }
+
+  return (
+    <div className={classNames} onClick={updatePurchaseHere}>
+      <p>{props.item.name}</p>
+    </div>
+  );
+}
+
+
+
+
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
   // this component is going to take care of state, and any change handlers you need to work with your state
   render() {
     return (
       <div>
-        <h2>Welcome to your Todo App!</h2>
+        <h2>
+          <div className="todoListMain">
+            <div className="header">
+              <TodoForm addItem={this.handleChanges} />
+              <TodoList tasks={this.state.tasks} completeTask={this.handleComplete} />
+              <button onClick={this.removePurchased}>Clear Completed</button>
+            </div>
+          </div>
+
+        </h2>
+
       </div>
     );
   }
@@ -17,75 +70,3 @@ class App extends React.Component {
 
 export default App;
 
-// Information Above Came With Assignment */ 
-
-// New Information Added Below //
-
-import React from 'react';
-import './App.scss';
-import TodoForm from './components/TodoComponents/TodoForm';
-import TodoList from './components/TodoComponents/TodoList';
-
-const todoListItems = [
-  {
-    name: "",
-    id: "",
-    completed: false,
-  },
- 
-]
-
-class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
-    constructor() {
-      super();
-      this.state = {
-        todoListItems
-      };
-  }
-
-  addItem = item => {
-    this.setState({
-      todoListItems: [
-        ...this.state.todoListItems, 
-        { name: item, completed: false, id: Date.now() }
-      ]
-    });
-  };
-
-  toggleComplete = id => {
-    this.setState ({
-      todoListItems: this.state.todoListItems.map(item =>
-        item.id === id ? { ...item, completed: !item.completed } : item 
-      )
-    });
-  };
-
-  removeCompleted = () => {
-    this.setState({
-      todoListItems: this.state.todoListItems.filter(item => !item.completed)
-    });
-  };
-
-
-  render() {
-    return (
-      <div className="app">
-        <div className="header">
-          <h1>Todo List:</h1>
-        </div>
-        <div className="todo-list">
-          <TodoList todoListItems={this.state.todoListItems} toggleComplete={this.toggleComplete} />
-        </div>
-        <div className="form">
-          <TodoForm addItem={this.addItem} />
-          <button onClick={this.removeCompleted}>Clear Completed</button>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default App;

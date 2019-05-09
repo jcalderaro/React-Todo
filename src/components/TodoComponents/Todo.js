@@ -1,19 +1,22 @@
-import React from 'react';
+import * as React from 'react';
 import './Todo.scss';
 
-function Todo(props) {
-    let classNames = "item"
-    if (props.item.completed){
-        classNames += "completed";
+class Todo extends React.Component {
+    constructor() {
+        super();
+        this.state = {};
     }
-    function updateTaskList() {
-        props.toggleComplete(props.item.id);
+    render() {
+        return (
+            <div onClick={() => this.props.toggleComplete(this.props.task.id)}
+                className={this.props.task.completed ? 'complete' : ''}>
+                {this.props.task.task}
+            </div>
+        );
     }
-    return (
-        <div className={classNames} onClick={updateTaskList}>
-            <p>{props.item.name}</p>
-        </div>
-    )
 }
 
 export default Todo;
+
+
+

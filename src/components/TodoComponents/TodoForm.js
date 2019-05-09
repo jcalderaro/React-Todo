@@ -1,46 +1,32 @@
-/* File Came Empty */
-
-/* Use This Area To Create The Form*/
-
 import React from 'react';
 
-class TodoListForm extends React.Component {
-    constructor(props) {
-        super(props);
+class TodoList extends React.Component {
+    constructor() {
+        super();
         this.state = {
-            input: ""
-        };
-    };
+            taskName: ''
+        }
+    }
 
-    onUpdate = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-      };
+    setTaskName = (event) => {
+        this.setState({ taskName: event.target.value });
+    }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.addItem(this.state.input);
-        this.setState({ input: "" });
-    };
-
+    handleSubmit = () => {
+        this.props.addItem(this.state.taskName);
+        this.setState({ taskName: '' });
+    }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input 
-                    type="text" 
-                    name="input"
-                    id="new-item"
-                    placeholder="...todo"
-                    value={this.state.input}
-                    onChange={this.onUpdate}
-                    />
-                <button type="submit">Add Todo</button>
-            </form>
+            <div className="todoListMain">
+                <div className="header">
+                    <input placeholder="enter task" onChange={this.setTaskName} value={this.state.taskName} />
+                    <button type="submit" onClick={this.handleSubmit}>add</button>
+                </div>
+            </div>
         );
     }
-    
-};
+}
 
-export default TodoListForm;
+export default TodoList;
